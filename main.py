@@ -1,9 +1,13 @@
 from playwright.sync_api import sync_playwright
 
-with sync_playwright() as p:
-    for browser_type in [p.chromium, p.firefox, p.webkit]:
-        browser = browser_type.launch()
+
+def screenshot_website(url):
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
         page = browser.new_page()
-        page.goto('http://playwright.dev')
-        page.screenshot(path=f'example-{browser_type.name}.png')
+        page.goto(url)
+        page.screenshot(path=f'./screenshots/screenshot.png')
         browser.close()
+
+
+screenshot_website('http://playwright.dev')
