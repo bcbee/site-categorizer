@@ -73,7 +73,13 @@ def analyze_website(screenshot_path):
         presence_penalty=0
     )
 
-    print(response.choices[0].message.content)
+    return response.choices[0].message.content
 
 
-analyze_website(screenshot_website('https://www.foxnews.com'))
+urls = open('urls.txt', 'r').read().splitlines()
+
+for url in urls:
+    try:
+        print(url, analyze_website(screenshot_website(url)))
+    except:
+        print(f"Failed to fetch {url}")
